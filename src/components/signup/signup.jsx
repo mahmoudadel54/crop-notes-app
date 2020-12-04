@@ -15,12 +15,7 @@ export default function SignUp() {
         confirmPassword:''
     });    
     const {signup, currentUser} = useAuth();
-      const schema = Joi.object({
-        username: Joi.string().required().min(5).max(20),
-        email:Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-        password:Joi.string().required().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
-        confirmedPassword: Joi.ref('password'),
-      });
+  
 
   const { register, handleSubmit, errors } = useForm();
 

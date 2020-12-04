@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import {useAuth} from '../../contexts/authContext';
+import { Link
+    // , useHistory 
+} from "react-router-dom";
 import firebase from '../../firebase';
 
 export default function NoteList() {
-    const history = useHistory();
+    const {currentUser} = useAuth()
+    // const history = useHistory();
     const [notes, setNotes] = useState([]);
     useEffect(()=>{
         firebase.firestore().collection("notes").onSnapshot((snapshot)=>{
             let allNotes = []
             snapshot.docs.map(doc=>{
+                if(doc.data().noteOwner===currentUser.uid)
                 allNotes.push(doc.data());
             })
             setNotes(allNotes);

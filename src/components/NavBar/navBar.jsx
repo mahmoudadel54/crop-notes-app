@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import {useAuth} from '../../contexts/authContext';
 
 export default function NavBar() {
   const navBtnRef = useRef();
   const divRef = useRef();
-  const { logout, isLogged, setIsLogged, currentUser } = useAuth();
+  const { logout, setIsLogged, currentUser } = useAuth();
   const history = useHistory();
   useEffect(() => {
     let element = navBtnRef.current;

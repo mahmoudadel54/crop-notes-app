@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import {  useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import {useAuth} from '../../contexts/authContext';
 import firebase from '../../firebase'
 import './style.css'
 
 export default function AddNoteForm() {
+  const { currentUser} = useAuth()
   const history = useHistory();
   const [formValues, setFormValues] = useState({
     noteTakerName: "",
@@ -15,6 +17,7 @@ export default function AddNoteForm() {
   const { register, handleSubmit, errors } = useForm();
 
   const handleChange = (e) => {
+    console.log(currentUser);
       console.log(e.target.value);
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
@@ -24,7 +27,8 @@ export default function AddNoteForm() {
     firebase.firestore().collection('notes').add({
       noteTakerName:formValues.noteTakerName,
       dataOfNote:formValues.dataOfNote,
-      noteDescription:formValues.noteDescription
+      noteDescription:formValues.noteDescription,
+      noteOwner:currentUser.uid
     })
     history.push("/notelist");
   };
